@@ -9,7 +9,7 @@ const Login = () => {
     <Stbox>
       <StinnerBox>
         <h1>Logo</h1>
-        <from>
+        <form>
           <StFont>아이디</StFont>
           <StInput type="text" />
           <StFont>비밀번호</StFont>
@@ -36,7 +36,7 @@ const Login = () => {
             <Button>구글로그인</Button>
             <Button>카카오로그인</Button>
           </StNetwork>
-        </from>
+        </form>
       </StinnerBox>
     </Stbox>
   );
