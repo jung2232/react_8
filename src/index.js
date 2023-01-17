@@ -7,10 +7,11 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import Detail from "./components/Detail";
-import SignUp from "./components/Login/Signup";
-import Login from "./components/Login/Login";
 import Main from "./components/Main";
 import Upload from "./components/Upload";
+
+import SignIn from "./page/Sign/SignIn";
+import SignUp from "./page/Sign/SignUp";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,8 +19,8 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/detail" element={<Detail />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signUp" element={<SignUp />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/main" element={<Main />} />
       <Route path="/upload" element={<Upload />} />
     </Routes>
