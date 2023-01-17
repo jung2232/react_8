@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 const Login = () => {
+  const [login, setLogin] = useState({
+    username: "",
+    password: "",
+  });
+
+  console.log(login);
+
+  const idPwhandler = ({ target: { value, name } }) => {
+    setLogin((prev) => ({ ...prev, [name]: value }));
+  };
+
   const navigate = useNavigate();
   return (
     <Stbox>
       <StinnerBox>
         <h1>Logo</h1>
-        <from>
+        <form>
           <StFont>아이디</StFont>
-          <StInput type="text" />
+          <StInput
+            value={login.username}
+            type="text"
+            name="username"
+            onChange={idPwhandler}
+          />
           <StFont>비밀번호</StFont>
-          <StNumber type="Number" />
+          <StNumber
+            value={login.password}
+            type="password"
+            name="password"
+            onChange={idPwhandler}
+          />
           <Stbutton>
             <Button
               variant="dark"
@@ -36,7 +57,7 @@ const Login = () => {
             <Button>구글로그인</Button>
             <Button>카카오로그인</Button>
           </StNetwork>
-        </from>
+        </form>
       </StinnerBox>
     </Stbox>
   );
