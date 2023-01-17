@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
+
+import { GoogleIcon, KakaoIcon } from "../../assets/icon/socialLogin";
+import flex from "../../lib/flex";
+
 const Login = () => {
+  const [login, setLogin] = useState({
+    username: "",
+    password: "",
+  });
+
+  const idPwHandler = ({ target: { value, name } }) => {
+    setLogin((prev) => ({ ...prev, [name]: value }));
+  };
+
   const navigate = useNavigate();
   return (
-    <Stbox>
+    <Stbox flex={flex}>
       <StinnerBox>
-        <h1>Logo</h1>
+        <h1>Login</h1>
         <form>
           <StFont>아이디</StFont>
-          <StInput type="text" />
+          <StInput
+            value={login.username}
+            type="text"
+            name="username"
+            onChange={idPwHandler}
+          />
           <StFont>비밀번호</StFont>
-          <StNumber type="Number" />
+          <StInput
+            value={login.password}
+            type="password"
+            name="password"
+            onChange={idPwHandler}
+          />
           <Stbutton>
             <Button
               variant="dark"
@@ -32,10 +53,16 @@ const Login = () => {
               로그인
             </Button>
           </Stbutton>
-          <StNetwork>
-            <Button>구글로그인</Button>
-            <Button>카카오로그인</Button>
-          </StNetwork>
+          <SocialBtnBox>
+            <SocialBtn bgColor="white">
+              <GoogleIcon style={{ position: "absolute", left: "16px" }} />{" "}
+              구글로 시작하기
+            </SocialBtn>
+            <SocialBtn bgColor="#FEE500">
+              <KakaoIcon style={{ position: "absolute", left: "16px" }} />
+              카카오로 시작하기
+            </SocialBtn>
+          </SocialBtnBox>
         </form>
       </StinnerBox>
     </Stbox>
@@ -45,22 +72,21 @@ const Login = () => {
 export default Login;
 
 // 박스전체
-const Stbox = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ffa500;
+const Stbox = styled.section`
+  ${(props) => props.flex({})}
+  width: 100wh;
+  height: 100vh;
 `;
 // 중앙정렬
 const StinnerBox = styled.div`
-  width: 500px;
+  width: 800px;
   height: 500px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: #f9f9f9;
 `;
 
 const StFont = styled.h4`
@@ -71,19 +97,7 @@ const StFont = styled.h4`
 const StInput = styled.input`
   width: 385px;
   height: 40px;
-`;
-
-const StNumber = styled.input`
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  width: 385px;
-  height: 40px;
+  padding-left: 10px;
 `;
 
 const Stbutton = styled.div`
@@ -93,10 +107,29 @@ const Stbutton = styled.div`
   margin-top: 10px;
 `;
 
-const StNetwork = styled.div`
-  width: 400px;
+const SocialBtnBox = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  gap: 10px;
+  margin-top: 30px;
+  gap: 20px;
+`;
+
+const SocialBtn = styled.button`
+  border: none;
+  border-radius: 15px;
+  position: relative;
+  margin: 0 auto;
+  width: 300px;
+  height: 46px;
+  padding: 0 12px;
+  padding-left: 48px;
+  background-color: ${(props) => props.bgColor};
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+`;
+
+const Button = styled.button`
+  padding: 10xp 50px;
+  background: none;
 `;
