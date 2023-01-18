@@ -16,7 +16,7 @@ import { userApis } from "../../apis/userApis";
 const SignUp = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    id: "",
+    username: "",
     password: "",
     passwordCheck: "",
     email: "",
@@ -27,8 +27,10 @@ const SignUp = () => {
   const [isCheck, setIsCheck] = useState(true);
 
   const userInfoHandler = ({ target: { value, name } }) => {
-    setUserInfo((prev) => ({ ...prev, [name]: value }));
+    setUserInfo((prev) => ({ ...prev, [name]: value.trim() }));
   };
+
+  console.log(userInfo);
 
   const signUpHandler = async (e) => {
     e.preventDefault();
@@ -46,9 +48,9 @@ const SignUp = () => {
         <StInputLabel>아이디</StInputLabel>
         <StInputBox>
           <StInput
-            value={userInfo.id}
+            value={userInfo.username}
             type="text"
-            name="id"
+            name="username"
             onChange={userInfoHandler}
           />
           <StBtn>중복확인</StBtn>
@@ -86,6 +88,9 @@ const SignUp = () => {
           name="email"
           onChange={userInfoHandler}
           onBlur={({ target: { value } }) => {
+            if (value.trim() === "") {
+              return;
+            }
             let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
             if (regex.test(value)) {
               return;

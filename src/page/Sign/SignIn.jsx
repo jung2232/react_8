@@ -22,7 +22,7 @@ const SignIn = () => {
   });
 
   const loginHandler = ({ target: { value, name } }) => {
-    setLogin((prev) => ({ ...prev, [name]: value }));
+    setLogin((prev) => ({ ...prev, [name]: value.trim() }));
   };
 
   const onLogin = async (e) => {
