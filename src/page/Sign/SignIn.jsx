@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import SignLayout from "../../components/Layout/SignLayout";
 
+import { userApis } from "../../apis/userApis";
+
 import { GoogleIcon, KakaoIcon } from "../../assets/icon/socialLogin";
 import {
   StInput,
@@ -23,11 +25,24 @@ const SignIn = () => {
     setLogin((prev) => ({ ...prev, [name]: value }));
   };
 
+  const onLogin = async (e) => {
+    e.preventDefault();
+    const { username, password } = login;
+    if (username === "" || password === "") {
+      alert("빈칸을 입력해 주세요!");
+    }
+    const result = await userApis.signInUser(login);
+    if (result.data === "success") {
+      const token = result.headers.authorization;
+      localStorage.setItem("token", token);
+    }
+  };
+
   const navigate = useNavigate();
   return (
     <SignLayout>
       <h1>Login</h1>
-      <StForm>
+      <StForm onSubmit={onLogin}>
         <StInputLabel>아이디</StInputLabel>
         <StInput
           value={login.username}
@@ -44,25 +59,19 @@ const SignIn = () => {
           placeholder="비밀번호를 입력해 주세요!"
           onChange={loginHandler}
         />
+
+        <StBtnBox>
+          <StBtn
+            type="button"
+            onClick={() => {
+              navigate("/signup");
+            }}
+          >
+            회원가입
+          </StBtn>
+          <StBtn>로그인</StBtn>
+        </StBtnBox>
       </StForm>
-      <StBtnBox>
-        <StBtn
-          variant="dark"
-          onClick={() => {
-            navigate("/signup");
-          }}
-        >
-          회원가입
-        </StBtn>
-        <StBtn
-          variant="dark"
-          onClick={() => {
-            navigate("/main");
-          }}
-        >
-          로그인
-        </StBtn>
-      </StBtnBox>
       <StSocialBtnBox>
         <StSocialBtn bgColor="white">
           <GoogleIcon style={{ position: "absolute", left: "16px" }} /> 구글로

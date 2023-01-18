@@ -11,6 +11,8 @@ import {
   StForm,
 } from "../../lib/signStyle";
 
+import { userApis } from "../../apis/userApis";
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
@@ -22,30 +24,19 @@ const SignUp = () => {
 
   const [msg, setMsg] = useState("");
 
-  const [isCheck, setIsCheck] = useState(false);
+  const [isCheck, setIsCheck] = useState(true);
 
-  const userInfoHandler = ({ target, target: { value, name } }) => {
-    // switch (name) {
-    //   case "id":
-    //     break;
-    //   case "password":
-    //     break;
-    //   case "passwordCheck":
-    //     break;
-    //   case "email":
-    //     console.log(regex.test(value));
-    //     break;
-    //   default:
-    //     setUserInfo((prev) => ({ ...prev, [name]: value }));
-    // }
+  const userInfoHandler = ({ target: { value, name } }) => {
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const signUpHandler = (e) => {
-    if (isCheck) {
+  const signUpHandler = async (e) => {
+    e.preventDefault();
+    if (!isCheck) {
       return;
     }
-    e.preventDefault();
+    const result = await userApis.signUpUser(userInfo);
+    console.log(result);
   };
 
   return (
@@ -72,7 +63,8 @@ const SignUp = () => {
             if (userInfo.password === userInfo.passwordCheck) {
               return;
             }
-            alert("비밀번호 확인과 일치하지 않습니다!");
+            userInfo.passwordCheck &&
+              alert("비밀번호 확인과 일치하지 않습니다!");
           }}
         />
         <StInputLabel>비밀번호확인</StInputLabel>
