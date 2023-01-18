@@ -1,10 +1,29 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Comment from "./Comment";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearTodo,
+  __getTodoThunk,
+  __updateTodoThunk,
+} from "./../redux/modules/todoSlice";
 const Detail = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { todo } = useSelector((state) => state.todo);
+
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const [updatedTodo, setUpdatedTodo] = useState("");
+
   const [isShow, setisShow] = useState(false);
+  useEffect(() => {
+    dispatch(__getTodoThunk(id));
+    return () => dispatch(clearTodo());
+  }, [dispatch, id]);
   return (
     <Wrap>
       <div>
