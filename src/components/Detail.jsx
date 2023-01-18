@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Comment from "./comment";
+import Comment from "./Comment";
 
 const Detail = () => {
   const [isShow, setisShow] = useState(false);
@@ -9,7 +9,7 @@ const Detail = () => {
     <Wrap>
       <div>
         <SbLogo>
-          <Link to="/main">당근팔조</Link>
+          <Link to="/Main">당근팔조</Link>
         </SbLogo>
       </div>
       <SbWrap>
@@ -35,14 +35,12 @@ const Detail = () => {
           <h5>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</h5>
         </StToggleContainer>
         <form>
-          <div>
-            <input
-              placeholder="이름 (5자 이내)"
-              type="text"
-              name="username"
-              maxLength={5}
-            />
-          </div>
+          <input
+            placeholder="이름 (5자 이내)"
+            type="text"
+            name="username"
+            maxLength={5}
+          />
           <input
             placeholder="댓글을 추가하세요. (100자 이내)"
             name="content"

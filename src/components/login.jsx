@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+
 const Login = () => {
   const navigate = useNavigate();
   return (
@@ -18,7 +19,7 @@ const Login = () => {
             <Button
               variant="dark"
               onClick={() => {
-                navigate("/signup");
+                navigate("/Signup");
               }}
             >
               회원가입
@@ -26,7 +27,7 @@ const Login = () => {
             <Button
               variant="dark"
               onClick={() => {
-                navigate("/main");
+                navigate("/Main");
               }}
             >
               로그인
@@ -97,6 +98,6 @@ const StNetwork = styled.div`
   width: 400px;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 10x;
   gap: 10px;
 `;
