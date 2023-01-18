@@ -4,7 +4,9 @@ import flex from "../../lib/flex";
 const SignLayout = ({ children }) => {
   return (
     <StWrap flex={flex}>
-      <StInnerBox flex={flex}>{children}</StInnerBox>
+      <StInnerWrap flex={flex}>
+        <StInnerBox>{children}</StInnerBox>
+      </StInnerWrap>
     </StWrap>
   );
 };
@@ -17,11 +19,18 @@ const StWrap = styled.section`
   ${({ flex }) => flex({})}
 `;
 
-const StInnerBox = styled.div`
+const StInnerWrap = styled.article`
   width: 800px;
   border-radius: 10px;
   padding: 5% 0;
   ${({ flex }) => flex({})}
   flex-direction: column;
   background-color: #f9f9f9;
+`;
+
+const StInnerBox = styled.div`
+  width: 50%;
+  h1 {
+    text-align: center;
+  }
 `;

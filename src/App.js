@@ -1,8 +1,7 @@
-import { useState } from "react";
-import Sign from "./components/Layout/SignLayout";
+import SignIn from "./page/Sign/SignIn";
 
 const App = () => {
-  return <Sign />;
+  return <SignIn />;
 };
 
 export default App;

@@ -5,9 +5,13 @@ import { useNavigate } from "react-router-dom";
 import SignLayout from "../../components/Layout/SignLayout";
 
 import { GoogleIcon, KakaoIcon } from "../../assets/icon/socialLogin";
-import { StInput, StBtn, StBtnBox, StInputLabel } from "../../lib/signStyle";
-
-import { axiosInstance } from "../../config/axiosInstance";
+import {
+  StInput,
+  StBtn,
+  StBtnBox,
+  StInputLabel,
+  StForm,
+} from "../../lib/signStyle";
 
 const SignIn = () => {
   const [login, setLogin] = useState({
@@ -15,9 +19,7 @@ const SignIn = () => {
     password: "",
   });
 
-  axiosInstance.get();
-
-  const idPwHandler = ({ target: { value, name } }) => {
+  const loginHandler = ({ target: { value, name } }) => {
     setLogin((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -25,14 +27,14 @@ const SignIn = () => {
   return (
     <SignLayout>
       <h1>Login</h1>
-      <form>
+      <StForm>
         <StInputLabel>아이디</StInputLabel>
         <StInput
           value={login.username}
           type="text"
           name="username"
           placeholder="아이디를 입력해 주세요!"
-          onChange={idPwHandler}
+          onChange={loginHandler}
         />
         <StInputLabel>비밀번호</StInputLabel>
         <StInput
@@ -40,9 +42,9 @@ const SignIn = () => {
           type="password"
           name="password"
           placeholder="비밀번호를 입력해 주세요!"
-          onChange={idPwHandler}
+          onChange={loginHandler}
         />
-      </form>
+      </StForm>
       <StBtnBox>
         <StBtn
           variant="dark"
