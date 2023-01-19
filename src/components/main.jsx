@@ -10,6 +10,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const boardList = useSelector((state) => state.board.boardList);
   console.log(boardList);
+
   useEffect(() => {
     dispatch(__getBoardList());
   }, [dispatch]);

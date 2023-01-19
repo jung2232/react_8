@@ -11,7 +11,6 @@ export const __getDetailList = createAsyncThunk(
   "detail/detailList",
   async (productId, thunkAPI) => {
     try {
-      console.log(productId);
       const data = await axiosInstance.get(`/api/products/${productId}`);
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
