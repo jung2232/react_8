@@ -6,25 +6,29 @@ import reportWebVitals from "./reportWebVitals";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
-import Detail from "./components/Detail";
-import Main from "./components/Main";
-import Upload from "./components/Upload";
-
 import SignIn from "./page/Sign/SignIn";
 import SignUp from "./page/Sign/SignUp";
+import { Provider } from "react-redux";
+import store from "./redux/config/configStore";
+import Upload from "./components/board/Upload";
+import Detail from "./components/board/Detail";
+import Home from "./page/Main/Home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/detail" element={<Detail />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/main" element={<Main />} />
-      <Route path="/upload" element={<Upload />} />
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<App />} />
+        <Route path="/:id" element={<Detail />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/Main" element={<Home />} />
+        <Route path="/Upload" element={<Upload />} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,32 +1,30 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { __deleteTodoThunk } from "../redux/modules/todoSlice";
 
-const Card = ({ todos }) => {
-  console.log(todos);
+const Card = ({ board }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onDeleteHandler = (e) => {
     e.stopPropagation();
     if (window.confirm("물품을 지울까요?")) {
-      dispatch(__deleteTodoThunk(todos.id));
     }
   };
 
+  console.log(board.id);
   return (
     <>
       <StBox>
         <SbBox
-          key={todos.id}
+          key={board.id}
           onClick={() => {
-            navigate("/detail");
+            navigate(`/${board.id}`);
           }}
         >
           <div>이미지</div>
-          <p>{todos.name}</p>
-          <p>{todos.price}</p>
+          <p>{board.title}</p>
+          <p>{board.price}</p>
           <button onClick={(e) => onDeleteHandler(e)}>삭제</button>
         </SbBox>
       </StBox>
@@ -43,6 +41,7 @@ const StBox = styled.div`
   justify-content: left;
   gap: 100px;
   margin: 60px;
+  cursor: pointer;
 `;
 
 const SbBox = styled.div`
