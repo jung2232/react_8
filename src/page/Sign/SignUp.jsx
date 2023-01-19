@@ -23,8 +23,6 @@ const SignUp = () => {
     email: "",
   });
 
-  const [msg, setMsg] = useState("");
-
   const [isUserNameCheck, setIsUserNameCheck] = useState(true);
 
   const userInfoHandler = ({ target: { value, name } }) => {
@@ -42,7 +40,6 @@ const SignUp = () => {
       return;
     }
     const result = await userApis.signUpUser(userInfo);
-    console.log(result);
     if (result.data === "success") {
       navigate("/");
     } else {

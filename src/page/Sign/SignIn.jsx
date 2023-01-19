@@ -37,6 +37,10 @@ const SignIn = () => {
       alert("일치하는 정보가 없습니다!");
     }
   };
+
+  const moveSocialLoginPage = (url) => () => {
+    window.location.replace(url);
+  };
   return (
     <SignLayout>
       <h1>Login</h1>
@@ -73,11 +77,17 @@ const SignIn = () => {
         </StBtnBox>
       </StForm>
       <StSocialBtnBox>
-        <StSocialBtn bgColor="white">
+        <StSocialBtn
+          bgColor="white"
+          onClick={moveSocialLoginPage(process.env.REACT_APP_GOOGLE)}
+        >
           <GoogleIcon style={{ position: "absolute", left: "16px" }} /> 구글로
           시작하기
         </StSocialBtn>
-        <StSocialBtn bgColor="#FEE500">
+        <StSocialBtn
+          bgColor="#FEE500"
+          onClick={moveSocialLoginPage(process.env.REACT_APP_KAKAO)}
+        >
           <KakaoIcon style={{ position: "absolute", left: "16px" }} />
           카카오로 시작하기
         </StSocialBtn>
