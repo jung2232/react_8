@@ -1,29 +1,29 @@
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import Comment from "./Comment";
+import Comment from "./../../components/Comment";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearTodo,
-  __getTodoThunk,
-  __updateTodoThunk,
-} from "./../redux/modules/todoSlice";
+import { __getDetailList } from "./../../redux/modules/detailSlice";
+
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { todo } = useSelector((state) => state.todo);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [updatedTodo, setUpdatedTodo] = useState("");
 
   const [isShow, setisShow] = useState(false);
+  const detailList = useSelector((state) => state.detail.detailList);
+
+  console.log(detailList);
+
   useEffect(() => {
-    dispatch(__getTodoThunk(id));
-    return () => dispatch(clearTodo());
-  }, [dispatch, id]);
+    dispatch(__getDetailList(id));
+  }, [dispatch]);
+
   return (
     <Wrap>
       <div>
@@ -32,16 +32,16 @@ const Detail = () => {
         </SbLogo>
       </div>
       <SbWrap>
-        <StImages>사진</StImages>
+        <StImages>{detailList.img}</StImages>
         <StUser>
           <div>
-            <h1>상품명</h1>
+            <p>{detailList.title}</p>
           </div>
           <div>
-            <p>상품설명</p>
+            <p>{detailList.desc}</p>
           </div>
           <div>
-            <p>가격:120000</p>
+            <p>가격:{detailList.price}</p>
           </div>
         </StUser>
       </SbWrap>
@@ -55,12 +55,6 @@ const Detail = () => {
         </StToggleContainer>
         <form>
           <input
-            placeholder="이름 (5자 이내)"
-            type="text"
-            name="username"
-            maxLength={5}
-          />
-          <input
             placeholder="댓글을 추가하세요. (100자 이내)"
             name="content"
             type="text"
@@ -68,9 +62,9 @@ const Detail = () => {
           />
           <button type="submit">추가하기</button>
         </form>
-        <StCommentList>
+        {/* <StCommentList>
           <Comment />
-        </StCommentList>
+        </StCommentList> */}
       </StContainer>
     </Wrap>
   );

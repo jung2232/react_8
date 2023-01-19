@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +9,7 @@ const Upload = () => {
   const [todo, setTodo] = useState({
     imageUrl: "",
     name: "",
+    title: "",
     desc: "",
     price: 0,
   });
@@ -90,10 +91,10 @@ const Upload = () => {
               <input
                 type="text"
                 placeholder="상품명을 입력해 주세요."
-                value={todo.name}
+                value={todo.title}
                 onChange={(ev) => {
                   const { value } = ev.target;
-                  setTodo({ ...todo, name: value });
+                  setTodo({ ...todo, title: value });
                 }}
                 required
               />
@@ -158,7 +159,6 @@ const StButton = styled.button`
   cursor: pointer;
   position: absolute;
   bottom: 50px;
-
   text-align: center;
 `;
 
