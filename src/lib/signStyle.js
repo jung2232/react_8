@@ -34,3 +34,5 @@ export const StInputLabel = styled.p`
   font-weight: bold;
   margin-bottom: 5px;
 `;
+
+export const StMsgP = styled.p``;

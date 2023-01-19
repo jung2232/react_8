@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+  baseURL: "http://carrot8.shop:8080/",
+  // baseURL: process.env.REACT_APP_URL,
 });
 
 axiosInstance.interceptors.request.use(
