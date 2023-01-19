@@ -129,5 +129,3 @@ const SbLogo = styled.h2`
   color: #000;
   margin: 40px;
 `;
-
-///

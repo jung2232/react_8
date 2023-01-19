@@ -2,10 +2,12 @@ import { axiosInstance } from "../config/axiosInstance";
 
 export const userApis = {
   signUpUser: async (userInfo) => {
-    console.log(userInfo);
-    const data = await axiosInstance.post("/user/signup", userInfo);
-    console.log(data);
-    return data;
+    try {
+      const data = await axiosInstance.post("/user/signup", userInfo);
+      return data;
+    } catch (error) {
+      return error;
+    }
   },
 
   signInUser: async (userInfo) => {
@@ -17,7 +19,14 @@ export const userApis = {
     }
   },
 
-  checkUserId: async ({ username }) => {},
+  checkUserId: async (username) => {
+    try {
+      const result = await axiosInstance.post("/user/doublecheck", username);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  },
 
   getUserInfo: async () => {
     try {

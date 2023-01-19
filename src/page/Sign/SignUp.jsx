@@ -9,6 +9,7 @@ import {
   StBtnBox,
   StInputLabel,
   StForm,
+  StMsgP,
 } from "../../lib/signStyle";
 
 import { userApis } from "../../apis/userApis";
@@ -24,21 +25,47 @@ const SignUp = () => {
 
   const [msg, setMsg] = useState("");
 
-  const [isCheck, setIsCheck] = useState(true);
+  const [isUserNameCheck, setIsUserNameCheck] = useState(true);
 
   const userInfoHandler = ({ target: { value, name } }) => {
     setUserInfo((prev) => ({ ...prev, [name]: value.trim() }));
   };
 
-  console.log(userInfo);
-
   const signUpHandler = async (e) => {
     e.preventDefault();
-    if (!isCheck) {
+    if (!isUserNameCheck) {
+      alert("아이디 중복 체크를 해주세요!");
+      return;
+    }
+    if (!userInfo.password === userInfo.passwordCheck) {
+      alert("비밀번호와 비밀번호 확인이 같지 않습니다!");
       return;
     }
     const result = await userApis.signUpUser(userInfo);
     console.log(result);
+    if (result.data === "success") {
+      navigate("/");
+    } else {
+      alert("예기치 못한 오류가 발생하였습니다!");
+      window.location.reload();
+    }
+  };
+
+  const checkUserId = async () => {
+    let regex = new RegExp("[a-z]{4,8}");
+    if (!regex.test(userInfo.username)) {
+      return alert("형식에 맞춰 써주세요!");
+    }
+    const result = await userApis.checkUserId({
+      username: userInfo.username,
+    });
+
+    if (result.data) {
+      alert("아이디가 중복되었습니다!");
+    } else {
+      setIsUserNameCheck(true);
+      alert("사용 가능한 아이디 입니다!");
+    }
   };
 
   return (
@@ -49,11 +76,17 @@ const SignUp = () => {
         <StInputBox>
           <StInput
             value={userInfo.username}
+            maxLength="8"
+            minLength="4"
+            required
             type="text"
             name="username"
             onChange={userInfoHandler}
+            placeholder="소문자 4 - 8자를 입력해주세요!"
           />
-          <StBtn>중복확인</StBtn>
+          <StBtn type="button" onClick={checkUserId}>
+            중복확인
+          </StBtn>
         </StInputBox>
         <StInputLabel>비밀번호</StInputLabel>
         <StInput
@@ -68,11 +101,20 @@ const SignUp = () => {
             userInfo.passwordCheck &&
               alert("비밀번호 확인과 일치하지 않습니다!");
           }}
+          required
+          minLength="8"
+          maxLength="15"
+          placeholder="8 - 15자를 입력해 주세요!"
         />
+        <StMsgP></StMsgP>
         <StInputLabel>비밀번호확인</StInputLabel>
         <StInput
           type="password"
           name="passwordCheck"
+          required
+          maxLength="15"
+          minLength="8"
+          placeholder="비밀번호와 똑같이 입력해주세요!"
           value={userInfo.passwordCheck}
           onChange={userInfoHandler}
           onBlur={() => {
@@ -86,6 +128,7 @@ const SignUp = () => {
         <StInput
           type="text"
           name="email"
+          required
           onChange={userInfoHandler}
           onBlur={({ target: { value } }) => {
             if (value.trim() === "") {
@@ -109,7 +152,7 @@ const SignUp = () => {
           >
             취소
           </StBtn>
-          <StBtn disabled={!isCheck}>회원가입</StBtn>
+          <StBtn>회원가입</StBtn>
         </StBtnBox>
       </StForm>
 
