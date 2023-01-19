@@ -13,8 +13,6 @@ export const userApis = {
   signInUser: async (userInfo) => {
     try {
       const result = await axiosInstance.post("/user/login", userInfo);
-      console.log(result);
-
       return result;
     } catch ({ response: { data } }) {
       return data.errorMessage;

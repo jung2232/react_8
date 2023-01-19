@@ -16,6 +16,7 @@ import {
 } from "../../lib/signStyle";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [login, setLogin] = useState({
     username: "",
     password: "",
@@ -27,18 +28,15 @@ const SignIn = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const { username, password } = login;
-    if (username === "" || password === "") {
-      alert("빈칸을 입력해 주세요!");
-    }
     const result = await userApis.signInUser(login);
     if (result.data === "success") {
       const token = result.headers.authorization;
       localStorage.setItem("token", token);
+      navigate("/main", { replace: true });
+    } else {
+      alert("일치하는 정보가 없습니다!");
     }
   };
-
-  const navigate = useNavigate();
   return (
     <SignLayout>
       <h1>Login</h1>
@@ -50,6 +48,7 @@ const SignIn = () => {
           name="username"
           placeholder="아이디를 입력해 주세요!"
           onChange={loginHandler}
+          required
         />
         <StInputLabel>비밀번호</StInputLabel>
         <StInput
@@ -58,6 +57,7 @@ const SignIn = () => {
           name="password"
           placeholder="비밀번호를 입력해 주세요!"
           onChange={loginHandler}
+          required
         />
 
         <StBtnBox>
