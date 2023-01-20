@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://carrot8.shop:8080/",
+  headers: {
+    Accept: "application/ json",
+  },
 });
 
 axiosInstance.interceptors.request.use(
