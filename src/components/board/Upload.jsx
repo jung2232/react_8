@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ const Upload = () => {
     desc: "",
     price: 0,
   });
-
-  const { isLoading, error } = useSelector((state) => state.todo);
 
   const onSubmitHandler = async (todo) => {
     await axios.post("http://localhost:3001/todo", todo);
@@ -41,22 +38,8 @@ const Upload = () => {
     }
   };
 
-  // const onCickImageUpload = () => {
-  //   imageInput.current.click();
-  // };
-  if (isLoading) {
-    return <div>로딩 중....</div>;
-  }
-  //에러
-  if (error) {
-    return <div>{error.message}</div>;
-  }
   return (
     <>
-      <SbLogo>
-        {" "}
-        <Link to="/"> 당근팔조 </Link>{" "}
-      </SbLogo>
       <SbWrap>
         <form
           onSubmit={(e) => {

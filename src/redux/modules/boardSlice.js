@@ -12,13 +12,12 @@ export const __getBoardList = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const data = await axiosInstance.get(`/api/products`);
-      console.log(data);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const boardSlice = createSlice({
@@ -31,7 +30,6 @@ export const boardSlice = createSlice({
     },
     [__getBoardList.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다
-      console.log(action);
       state.boardList = action.payload; // Store에 있는 todo에 서버에서 가져온 todo를 넣습니다.
     },
     [__getBoardList.rejected]: (state) => {
