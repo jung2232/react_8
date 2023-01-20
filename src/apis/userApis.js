@@ -12,10 +12,13 @@ export const userApis = {
 
   signInUser: async (userInfo) => {
     try {
+      console.log("요청 전");
       const result = await axiosInstance.post("/user/login", userInfo);
+      console.log("요청 후");
       return result;
-    } catch ({ response: { data } }) {
-      return data.errorMessage;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   },
 
@@ -36,5 +39,12 @@ export const userApis = {
       const { errorMessage } = error.response.data;
       return errorMessage;
     }
+  },
+
+  getUserData: async () => {
+    try {
+      const { data } = await axiosInstance.get("/user/mypage");
+      return data;
+    } catch {}
   },
 };

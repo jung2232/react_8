@@ -39,6 +39,7 @@ const SignUp = () => {
       alert("비밀번호와 비밀번호 확인이 같지 않습니다!");
       return;
     }
+
     const result = await userApis.signUpUser(userInfo);
     if (result.data === "success") {
       navigate("/");

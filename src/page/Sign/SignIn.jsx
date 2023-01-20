@@ -29,10 +29,11 @@ const SignIn = () => {
   const onLogin = async (e) => {
     e.preventDefault();
     const result = await userApis.signInUser(login);
+    console.log(result);
     if (result.data === "success") {
       const token = result.headers.authorization;
       localStorage.setItem("token", token);
-      navigate("/main", { replace: true });
+      navigate("/", { replace: true });
     } else {
       alert("일치하는 정보가 없습니다!");
     }
@@ -41,6 +42,7 @@ const SignIn = () => {
   const moveSocialLoginPage = (url) => () => {
     window.location.replace(url);
   };
+
   return (
     <SignLayout>
       <h1>Login</h1>
