@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { __deleteDetailList } from "./../redux/modules/boardSlice";
 const Card = ({ board }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -9,12 +9,12 @@ const Card = ({ board }) => {
   const onDeleteHandler = (e) => {
     e.stopPropagation();
     if (window.confirm("물품을 지울까요?")) {
+      dispatch(__deleteDetailList(board.id));
     }
   };
 
-  console.log(board.id);
   return (
-    <>
+    <StWrap>
       <StBox>
         <SbBox
           key={board.id}
@@ -22,18 +22,21 @@ const Card = ({ board }) => {
             navigate(`/${board.id}`);
           }}
         >
-          <div>이미지</div>
+          <div>{board.image}</div>
           <p>{board.title}</p>
           <p>{board.price}</p>
           <button onClick={(e) => onDeleteHandler(e)}>삭제</button>
         </SbBox>
       </StBox>
-    </>
+    </StWrap>
   );
 };
 
 export default Card;
-
+const StWrap = styled.div`
+  display: flex;
+  justify-items: left;
+`;
 const StBox = styled.div`
   width: 100%;
   height: 100%;

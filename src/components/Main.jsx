@@ -9,7 +9,6 @@ const Main = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const boardList = useSelector((state) => state.board.boardList);
-  console.log(boardList);
 
   useEffect(() => {
     dispatch(__getBoardList());
@@ -22,7 +21,7 @@ const Main = () => {
         <SbHeader>
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/Upload");
             }}
           >
             글쓰기
