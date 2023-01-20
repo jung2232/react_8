@@ -8,7 +8,6 @@ const Card = ({ board }) => {
   const onDeleteHandler = (e) => {
     e.stopPropagation();
     if (window.confirm("물품을 지울까요?")) {
-      dispatch(__deleteDetailList(board.id));
     }
   };
   const AddComma = (num) => {
