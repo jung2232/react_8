@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { __deleteDetailList } from "./../redux/modules/boardSlice";
 const Card = ({ board }) => {
   const { img, desc, id, porice, title } = board;
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const onDeleteHandler = (e) => {
     e.stopPropagation();
     if (window.confirm("물품을 지울까요?")) {
