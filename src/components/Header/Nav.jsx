@@ -6,6 +6,7 @@ import { userApis } from "../../apis/userApis";
 const Nav = () => {
   const [userName, setUserName] = useState("");
   const token = localStorage.getItem("token");
+
   useLayoutEffect(() => {
     if (token) {
       userApis.getUserInfo().then(({ data }) => setUserName(data.username));
