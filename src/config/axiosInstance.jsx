@@ -23,6 +23,10 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (config) => config,
   (error) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return error;
+    }
     if (
       error.response.data.errorMessage ===
       "JWT String argument cannot be null or empty."
@@ -31,5 +35,5 @@ axiosInstance.interceptors.response.use(
       window.location.reload();
     }
     return error;
-  }
+  },
 );

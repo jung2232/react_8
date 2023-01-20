@@ -1,22 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getBoardList } from "../redux/modules/boardSlice";
 import Card from "./Card";
 import styled from "styled-components";
-import { userApis } from "../apis/userApis";
 
 const Main = () => {
   const dispatch = useDispatch();
   const boardList = useSelector((state) => state.board.boardList);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [userData, setUsetData] = useState({});
-
-  useEffect(() => {
-    userApis.getUserInfo().then(({ data }) => {
-      setUsetData(data);
-    });
-  }, []);
 
   useEffect(() => {
     const token = searchParams.get("Authorization");
@@ -37,7 +29,7 @@ const Main = () => {
       {boardList?.length === 0 && <p size="18">물품이 없네요!</p>}
       <StBoardList>
         {boardList?.map((board) => (
-          <Card key={board.id} board={board} username={userData.username} />
+          <Card key={board.id} board={board} />
         ))}
       </StBoardList>
     </>

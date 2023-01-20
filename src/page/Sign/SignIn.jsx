@@ -30,9 +30,8 @@ const SignIn = () => {
   const onLogin = async (e) => {
     e.preventDefault();
     const result = await userApis.signInUser(login);
-    console.log(result);
+
     if (result.data === "success") {
-      console.log(result);
       const token = result.headers.authorization;
       localStorage.setItem("token", token);
       window.location = "/";
