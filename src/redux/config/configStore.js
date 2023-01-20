@@ -1,9 +1,11 @@
 // src/redux/config/configStore.js
 import { configureStore } from "@reduxjs/toolkit";
+
 /**
  * import 해온 것은 slice.reducer 입니다.
  */
 import boardSlice from "../modules/boardSlice";
+import commentSlice from "../modules/commentSlice";
 import detailSlice from "../modules/detailSlice";
 
 /**
@@ -15,7 +17,7 @@ import detailSlice from "../modules/detailSlice";
  */
 
 const store = configureStore({
-  reducer: { board: boardSlice, detail: detailSlice },
+  reducer: { board: boardSlice, detail: detailSlice, comments: commentSlice },
 });
 
 export default store;

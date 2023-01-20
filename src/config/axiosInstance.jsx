@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+  baseURL: "http://carrot8.shop:8080/",
 });
 
 axiosInstance.interceptors.request.use(
@@ -10,8 +10,9 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers["Authorization"] = `${token}`;
       return config;
+    } else {
+      return config;
     }
-    return config;
   },
   (error) => {
     console.log(error);
@@ -30,5 +31,5 @@ axiosInstance.interceptors.response.use(
       window.location.reload();
     }
     return error;
-  },
+  }
 );

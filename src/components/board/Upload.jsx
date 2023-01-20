@@ -1,63 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { __addBoard } from "../../redux/modules/boardSlice";
 const Upload = () => {
-  const navigate = useNavigate();
-  const [todo, setTodo] = useState({
-    imageUrl: "",
-    name: "",
+  const dispatch = useDispatch();
+
+  const [form, setForm] = useState({
+    image: "",
     title: "",
-    desc: "",
+    description: "",
+    name: "상품이름입니다",
     price: 0,
   });
 
-  const onSubmitHandler = async (todo) => {
-    await axios.post("http://localhost:3001/todo", todo);
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const { image, title, description, price, name } = form;
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("name", name);
+    formData.append("price", price);
+    dispatch(__addBoard(formData));
+    setForm({ image: "", title: "", description: "", price: 0 });
   };
 
   const onChangeImg = async (e) => {
     e.preventDefault();
-
     if (e.target.files) {
       const uploadFile = e.target.files[0];
-      console.log(uploadFile);
-
-      const formData = new FormData();
-      formData.append("files", uploadFile);
-
-      await axios({
-        method: "post",
-        url: "/todo",
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const copy = { ...form, image: uploadFile };
+      setForm(copy);
     }
   };
 
+  // const onCickImageUpload = () => {
+  //   imageInput.current.click();
+  // };
+  // if (isLoading) {
+  //   return <div>로딩 중....</div>;
+  // }
+  // //에러
+  // if (error) {
+  //   return <div>{error.message}</div>;
+  // }
   return (
     <>
       <SbWrap>
-        <form
-          onSubmit={(e) => {
-            // 👇 submit했을 때 브라우저의 새로고침을 방지합니다.
-            e.preventDefault();
-            if (
-              (todo.name.trim() === "" ||
-                todo.desc.trim() === "" ||
-                todo.price.trim() === "",
-              alert("등록 되었습니다."),
-              navigate("/Main"))
-            ) {
-              return alert("모든 항목을 입력해주세요.");
-            }
-            setTodo({ name: "", desc: "", price: 0 });
-            onSubmitHandler(todo);
-          }}
-        >
+        <StForm onSubmit={onSubmitHandler}>
           <StImages>
             <label htmlFor="profile-upload" />
             <input
@@ -74,10 +66,10 @@ const Upload = () => {
               <input
                 type="text"
                 placeholder="상품명을 입력해 주세요."
-                value={todo.title}
+                value={form.title}
                 onChange={(ev) => {
                   const { value } = ev.target;
-                  setTodo({ ...todo, title: value });
+                  setForm({ ...form, title: value });
                 }}
                 required
               />
@@ -87,10 +79,11 @@ const Upload = () => {
                 placeholder="상품내용을 입력해 주세요."
                 rows={20}
                 cols={30}
-                value={todo.desc}
+                value={form.description}
+                q
                 onChange={(ev) => {
                   const { value } = ev.target;
-                  setTodo({ ...todo, desc: value });
+                  setForm({ ...form, description: value });
                 }}
                 required
               />
@@ -98,10 +91,10 @@ const Upload = () => {
                 <StNumber
                   type="number"
                   placeholder="금액을 입력해 주세요."
-                  value={todo.price}
+                  value={form.price}
                   onChange={(ev) => {
                     const { value } = ev.target;
-                    setTodo({ ...todo, price: value });
+                    setForm({ ...form, price: value });
                   }}
                   required
                 />
@@ -112,7 +105,7 @@ const Upload = () => {
             </StFont>
           </StUser>
           <StButton>등록하기</StButton>
-        </form>
+        </StForm>
       </SbWrap>
     </>
   );
@@ -165,14 +158,13 @@ const StUser = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const SbWrap = styled.div`
-  width: 100%;
-  height: 100%;
+const StForm = styled.form`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 const StFile = styled.input``;
-
+const SbWrap = styled.div``;
 const SbLogo = styled.h2`
   font-size: 30px;
   color: #000;
