@@ -18,7 +18,7 @@ export const __getDetailList = createAsyncThunk(
       console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const detailSlice = createSlice({

@@ -1,16 +1,22 @@
-import styled from "styled-components";
-import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getBoardList } from "../redux/modules/boardSlice";
 import Card from "./Card";
+import styled from "styled-components";
+import { userApis } from "../apis/userApis";
 
 const Main = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const boardList = useSelector((state) => state.board.boardList);
-
   const [searchParams, setSearchParams] = useSearchParams();
+  const [userData, setUsetData] = useState({});
+
+  useEffect(() => {
+    userApis.getUserInfo().then(({ data }) => {
+      setUsetData(data);
+    });
+  }, []);
 
   useEffect(() => {
     const token = searchParams.get("Authorization");
@@ -20,67 +26,66 @@ const Main = () => {
     }
   }, [searchParams, setSearchParams]);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     dispatch(__getBoardList());
   }, [dispatch]);
 
   return (
-    <div>
-      <StHeader>
-        <StLogo>당근팔조</StLogo>
-        <SbHeader>
-          <button
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            글쓰기
-          </button>
-          <button>로그아웃</button>
-          <h4>닉네임님 환영합니다!</h4>
-        </SbHeader>
-      </StHeader>
-      <p size="18">물품이 없네요!</p>
-      {boardList?.map((board) => (
-        <Card key={board.id} board={board} />
-      ))}
-    </div>
+    <>
+      {boardList?.length === 0 && <p size="18">물품이 없네요!</p>}
+      <StBoardList>
+        {boardList?.map((board) => (
+          <Card key={board.id} board={board} username={userData.username} />
+        ))}
+      </StBoardList>
+    </>
   );
 };
 
 export default Main;
 
-const StHeader = styled.header`
+const StBoardList = styled.ul`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const SbHeader = styled.div`
-  width: 400px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 50px;
-`;
-
-const StBox = styled.div`
-  display: flex;
-  justify-content: left;
   flex-wrap: wrap;
-  gap: 100px;
-  margin: 60px;
-`;
-
-const SbBox = styled.div`
-  box-sizing: border-box;
-  width: 400px;
-  height: 400px;
-  border: 1px #ccc solid;
-  text-align: center;
-  padding-top: 150px;
-`;
-
-const StLogo = styled.h2`
-  margin: 20px;
+  column-gap: 3%;
+  padding-bottom: 3rem;
+  row-gap: 2.5rem;
+  li {
+    width: 31.333%;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 100%;
+    }
+    & > div {
+      padding: 30px;
+    }
+    & > div > div {
+      margin-bottom: 15px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      border: none;
+      background: none;
+      width: 100px;
+      padding: 8px 0;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+        0 8px 10px -6px rgb(0 0 0 / 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+    }
+  }
 `;

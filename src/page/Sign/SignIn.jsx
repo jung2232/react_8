@@ -31,9 +31,10 @@ const SignIn = () => {
     const result = await userApis.signInUser(login);
     console.log(result);
     if (result.data === "success") {
+      console.log(result);
       const token = result.headers.authorization;
       localStorage.setItem("token", token);
-      navigate("/", { replace: true });
+      window.location = "/";
     } else {
       alert("일치하는 정보가 없습니다!");
     }

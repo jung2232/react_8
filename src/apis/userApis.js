@@ -12,9 +12,7 @@ export const userApis = {
 
   signInUser: async (userInfo) => {
     try {
-      console.log("요청 전");
       const result = await axiosInstance.post("/user/login", userInfo);
-      console.log("요청 후");
       return result;
     } catch (error) {
       console.log(error);
@@ -44,6 +42,7 @@ export const userApis = {
   getUserData: async () => {
     try {
       const { data } = await axiosInstance.get("/user/mypage");
+
       return data;
     } catch {}
   },

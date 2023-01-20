@@ -6,12 +6,12 @@ import { userApis } from "../../apis/userApis";
 const Nav = () => {
   const [userName, setUserName] = useState("");
   const token = localStorage.getItem("token");
-  // useLayoutEffect(() => {
-  //   if (token) {
-  //     userApis.getUserInfo().then(({ data }) => setUserName(data.username));
-  //     return;
-  //   }
-  // }, [token]);
+  useLayoutEffect(() => {
+    if (token) {
+      userApis.getUserInfo().then(({ data }) => setUserName(data.username));
+      return;
+    }
+  }, [token]);
 
   return (
     <StNav>
@@ -24,7 +24,16 @@ const Nav = () => {
             <Link to="Upload">글쓰기</Link>
             <Link to="mypage">마이페이지</Link>
             <p>
-              <span>{`${userName}`}</span> 님 반갑습니다!
+              <span>{`${userName ?? "사용자"}`}</span> 님 반갑습니다!
+            </p>
+            <p
+              onClick={() => {
+                localStorage.removeItem("token");
+                window.location.reload();
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              로그아웃
             </p>
           </StBox>
         ) : (

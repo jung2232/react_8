@@ -1,18 +1,20 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const Card = ({ board }) => {
+  const { img, desc, id, porice, title } = board;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const onDeleteHandler = (e) => {
     e.stopPropagation();
     if (window.confirm("물품을 지울까요?")) {
     }
   };
+  const AddComma = (num) => {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  };
 
-  console.log(board.id);
   return (
     <>
       <StBox>
@@ -22,9 +24,12 @@ const Card = ({ board }) => {
             navigate(`/${board.id}`);
           }}
         >
-          <div>이미지</div>
-          <p>{board.title}</p>
-          <p>{board.price}</p>
+          <div>
+            <img src={img} alt="판매상품" />
+          </div>
+          <h1>{board.title}</h1>
+          <p>{board.desc}</p>
+          <p>{AddComma(board.price)}원</p>
           <button onClick={(e) => onDeleteHandler(e)}>삭제</button>
         </SbBox>
       </StBox>
@@ -34,21 +39,8 @@ const Card = ({ board }) => {
 
 export default Card;
 
-const StBox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: left;
-  gap: 100px;
-  margin: 60px;
+const StBox = styled.li`
   cursor: pointer;
 `;
 
-const SbBox = styled.div`
-  box-sizing: border-box;
-  width: 400px;
-  height: 400px;
-  border: 1px #ccc solid;
-  text-align: center;
-  padding-top: 150px;
-`;
+const SbBox = styled.div``;
