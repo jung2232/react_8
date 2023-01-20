@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Comment from "./Comment";
 import commentSlice, { __addComment } from "../redux/modules/commentSlice";
 
 const CommentForm = () => {
@@ -53,9 +52,7 @@ const CommentForm = () => {
           추가하기
         </button>
       </form>
-      <StCommentList>
-        <Comment />
-      </StCommentList>
+      <StCommentList></StCommentList>
     </StContainer>
   );
 };
