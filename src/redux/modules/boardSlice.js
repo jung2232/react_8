@@ -10,7 +10,9 @@ export const __getBoardList = createAsyncThunk(
   "board/boardList",
   async (_, thunkAPI) => {
     try {
-      const data = await axiosInstance.get(`/api/products`);
+      const data = await axiosInstance.get(`/api/products`, {
+        withCredentials: true,
+      });
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -23,11 +25,16 @@ export const __addBoard = createAsyncThunk(
   "board/__addBoard",
   async (payload, thunkAPI) => {
     try {
-      const data = await axiosInstance.post(`/api/products`, payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const data = await axiosInstance.post(
+        `/api/products`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+        { withCredentials: true }
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
@@ -40,7 +47,9 @@ export const __deleteDetailList = createAsyncThunk(
   "detail/deletedetailList",
   async (productId, thunkAPI) => {
     try {
-      const data = await axiosInstance.delete(`/api/products/${productId}`);
+      const data = await axiosInstance.delete(`/api/products/${productId}`, {
+        withCredentials: true,
+      });
       if (data.status === 200) {
         thunkAPI.dispatch(__getBoardList());
       }
@@ -48,7 +57,7 @@ export const __deleteDetailList = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  },
+  }
 );
 
 export const boardSlice = createSlice({

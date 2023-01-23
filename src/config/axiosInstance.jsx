@@ -2,7 +2,9 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://carrot8.shop:8080/",
+  withCredentials: true,
 });
+axiosInstance.defaults.withCredentials = true;
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -17,7 +19,7 @@ axiosInstance.interceptors.request.use(
   (error) => {
     console.log(error);
     return error;
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(

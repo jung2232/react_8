@@ -14,19 +14,20 @@ const Upload = () => {
     price: 0,
   });
 
+  //이미지 보내기
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const { image, title, description, price, name } = form;
+    const { image, title, description, price } = form;
     const formData = new FormData();
     formData.append("image", image);
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("name", name);
     formData.append("price", price);
     dispatch(__addBoard(formData));
     setForm({ image: "", title: "", description: "", price: 0 });
   };
 
+  //미리보기
   const onChangeImg = async (e) => {
     e.preventDefault();
     if (e.target.files) {

@@ -41,6 +41,7 @@ const SignUp = () => {
     }
 
     const result = await userApis.signUpUser(userInfo);
+    console.log(result);
     if (result.data === "success") {
       navigate("/");
     } else {

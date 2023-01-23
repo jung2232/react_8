@@ -3,7 +3,9 @@ import { axiosInstance } from "../config/axiosInstance";
 export const userApis = {
   signUpUser: async (userInfo) => {
     try {
-      const data = await axiosInstance.post("/user/signup", userInfo);
+      const data = await axiosInstance.post("/user/signup", userInfo, {
+        withCredentials: true,
+      });
       return data;
     } catch (error) {
       return error;
@@ -12,7 +14,9 @@ export const userApis = {
 
   signInUser: async (userInfo) => {
     try {
-      const result = await axiosInstance.post("/user/login", userInfo);
+      const result = await axiosInstance.post("/user/login", userInfo, {
+        withCredentials: true,
+      });
       return result;
     } catch (error) {
       console.log(error);
@@ -22,7 +26,9 @@ export const userApis = {
 
   checkUserId: async (username) => {
     try {
-      const result = await axiosInstance.post("/user/doublecheck", username);
+      const result = await axiosInstance.post("/user/doublecheck", username, {
+        withCredentials: true,
+      });
       return result;
     } catch (error) {
       return error;
@@ -31,7 +37,9 @@ export const userApis = {
 
   getUserInfo: async () => {
     try {
-      const result = await axiosInstance.get("/user/info");
+      const result = await axiosInstance.get("/user/info", {
+        withCredentials: true,
+      });
       return result;
     } catch (error) {
       const { errorMessage } = error.response.data;
@@ -41,7 +49,9 @@ export const userApis = {
 
   getUserData: async () => {
     try {
-      const { data } = await axiosInstance.get("/user/mypage");
+      const { data } = await axiosInstance.get("/user/mypage", {
+        withCredentials: true,
+      });
 
       return data;
     } catch {}
