@@ -15,7 +15,6 @@ export default SignLayout;
 
 const StWrap = styled.section`
   width: 100wh;
-  height: 100vh;
   ${({ flex }) => flex({})}
 `;
 

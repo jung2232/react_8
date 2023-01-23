@@ -2,6 +2,7 @@ import { axiosInstance } from "../config/axiosInstance";
 
 export const userApis = {
   signUpUser: async (userInfo) => {
+    axiosInstance.defaults.withCredentials = true;
     try {
       const data = await axiosInstance.post("/user/signup", userInfo, {
         withCredentials: true,
@@ -13,6 +14,7 @@ export const userApis = {
   },
 
   signInUser: async (userInfo) => {
+    axiosInstance.defaults.withCredentials = true;
     try {
       const result = await axiosInstance.post("/user/login", userInfo, {
         withCredentials: true,
@@ -25,6 +27,7 @@ export const userApis = {
   },
 
   checkUserId: async (username) => {
+    axiosInstance.defaults.withCredentials = true;
     try {
       const result = await axiosInstance.post("/user/doublecheck", username, {
         withCredentials: true,
@@ -37,11 +40,13 @@ export const userApis = {
 
   getUserInfo: async () => {
     try {
+      axiosInstance.defaults.withCredentials = true;
       const result = await axiosInstance.get("/user/info", {
         withCredentials: true,
       });
       return result;
     } catch (error) {
+      axiosInstance.defaults.withCredentials = true;
       const { errorMessage } = error.response.data;
       return errorMessage;
     }
@@ -49,6 +54,7 @@ export const userApis = {
 
   getUserData: async () => {
     try {
+      axiosInstance.defaults.withCredentials = true;
       const { data } = await axiosInstance.get("/user/mypage", {
         withCredentials: true,
       });

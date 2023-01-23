@@ -7,7 +7,10 @@ export const __addComment = createAsyncThunk(
     try {
       const data = await axiosInstance.post(
         `/comment/${commentInfo.id}`,
-        commentInfo.content
+        commentInfo.content,
+        {
+          withCredentials: true,
+        }
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {

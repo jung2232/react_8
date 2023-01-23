@@ -11,12 +11,14 @@ export const __getDetail = createAsyncThunk(
   "detail/detail",
   async (productId, thunkAPI) => {
     try {
-      const data = await axiosInstance.get(`/api/products/${productId}`);
+      const data = await axiosInstance.get(`/api/products/${productId}`, {
+        withCredentials: true,
+      });
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  },
+  }
 );
 
 export const __updateDetail = createAsyncThunk(
@@ -24,7 +26,9 @@ export const __updateDetail = createAsyncThunk(
   async (detailData, thunkAPI) => {
     const { id, data: sendData } = detailData;
     try {
-      const data = await axiosInstance.patch(`/api/products/${id}`, sendData);
+      const data = await axiosInstance.patch(`/api/products/${id}`, sendData, {
+        withCredentials: true,
+      });
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);

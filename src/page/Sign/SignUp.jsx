@@ -41,7 +41,6 @@ const SignUp = () => {
     }
 
     const result = await userApis.signUpUser(userInfo);
-    console.log(result);
     if (result.data === "success") {
       navigate("/");
     } else {
@@ -146,7 +145,7 @@ const SignUp = () => {
             type="button"
             variant="dark"
             onClick={() => {
-              navigate(-1);
+              navigate("/signIn");
             }}
           >
             취소

@@ -1,10 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://carrot8.shop:8080/",
-  withCredentials: true,
+  baseURL: "http://13.125.220.74:8080/",
 });
-axiosInstance.defaults.withCredentials = true;
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -25,6 +23,10 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (config) => config,
   (error) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return error;
+    }
     if (
       error.response.data.errorMessage ===
       "JWT String argument cannot be null or empty."
